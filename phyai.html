@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autonomous Polymer Platform - Development Roadmap</title>
+    <style>
+        :root {
+            --bg-color: #0d0e12;
+            --panel-bg: rgba(22, 24, 30, 0.85);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-main: #f0f2f5;
+            --text-muted: #94a3b8;
+            --accent-blue: #38bdf8;
+            --accent-green: #34d399;
+            --accent-purple: #c084fc;
+            --code-bg: rgba(0, 0, 0, 0.3);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 280px;
+            background: var(--panel-bg);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            padding: 24px 16px;
+            backdrop-filter: blur(12px);
+            box-sizing: border-box;
+        }
+
+        .sidebar h2 {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin: 0 0 24px 8px;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 0.95rem;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-bottom: 8px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-main);
+        }
+
+        .nav-btn.active {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent-blue);
+            font-weight: 500;
+            border-left: 3px solid var(--accent-blue);
+            border-radius: 0 6px 6px 0;
+        }
+
+        /* Main Content Container */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            box-sizing: border-box;
+            background: radial-gradient(circle at 80% 20%, rgba(56, 189, 248, 0.03), transparent 40%);
+        }
+
+        .header {
+            margin-bottom: 32px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            margin: 0 0 8px 0;
+            font-size: 1.8rem;
+            font-weight: 600;
+            background: linear-gradient(to right, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        /* Grid Layout Components */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        .card {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .card h3 {
+            margin: 0 0 16px 0;
+            font-size: 1.1rem;
+            color: var(--accent-blue);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Bullet lists & verification parameters */
+        ul {
+            margin: 0;
+            padding-left: 20px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        li strong {
+            color: var(--text-main);
+        }
+
+        /* Architecture Architecture Diagrams */
+        pre {
+            font-family: 'Fira Code', 'Courier New', Courier, monospace;
+            background: var(--code-bg);
+            padding: 16px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            overflow-x: auto;
+            color: var(--accent-green);
+            font-size: 0.88rem;
+            line-height: 1.4;
+            margin: 0;
+        }
+
+        /* Target Matrix Tags */
+        .target-badge {
+            display: inline-block;
+            background: rgba(52, 211, 153, 0.1);
+            color: var(--accent-green);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-family: monospace;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        /* Timeline Table Configuration */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        td {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        tr:hover td {
+            color: var(--text-main);
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.25s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <h2>SDL Architecture</h2>
+        <button class="nav-btn active" onclick="switchTab(event, 'overview')">Overview & Timeline</button>
+        <button class="nav-btn" onclick="switchTab(event, 'task1')">M1. Motion Platform</button>
+        <button class="nav-btn" onclick="switchTab(event, 'task2')">M2. Fluidics & Mixing</button>
+        <button class="nav-btn" onclick="switchTab(event, 'task3')">M3. Automation Control</button>
+        <button class="nav-btn" onclick="switchTab(event, 'task4')">M4. Computer Vision</button>
+        <button class="nav-btn" onclick="switchTab(event, 'task5')">M5. Closed-Loop AI</button>
+    </div>
+
+    <div class="main-content">
+
+        <div id="overview" class="tab-content active">
+            <div class="header">
+                <h1>Autonomous Polymer Formulation Platform</h1>
+                <p>Incremental 5-stage architectural deployment minimizing structural risk while maximizing publishable execution.</p>
+            </div>
+            
+            <div class="grid">
+                <div class="card full-width">
+                    <h3>Project Philosophy</h3>
+                    <p style="color: var(--text-muted); line-height: 1.6; margin: 0;">
+                        This framework treats a **Self-Driving Laboratory (SDL)** deployment like modular hardware blocks. By partitioning development into distinct standalone milestones, each milestone delivers an operational engineering artifact alongside validation datasets ready for manuscript preparation.
+                    </p>
+                </div>
+
+                <div class="card full-width">
+                    <h3>Execution Gantt & Milestones</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 15%;">Month</th>
+                                <th style="width: 35%;">Milestone Focus</th>
+                                <th style="width: 50%;">Publishable Engineering Output</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Month 1</strong></td>
+                                <td style="color: var(--accent-blue)">Motion Platform Integration</td>
+                                <td>Precision translation coordinates and physical micro-stepping verification profiles.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Month 2</strong></td>
+                                <td style="color: var(--accent-blue)">Fluid Delivery & Mixing</td>
+                                <td>High-throughput fluid calibration curves and spatial dynamic color mixing matrices.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Month 3</strong></td>
+                                <td style="color: var(--accent-blue)">Software Automation Stack</td>
+                                <td>Complete orchestration framework executing unsupervised 96-well plate arrays.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Month 4</strong></td>
+                                <td style="color: var(--accent-blue)">Computer Vision & Parsing</td>
+                                <td>Real-time spectral/turbidity extraction arrays mapping quantitative chemical spaces.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Month 5-6</strong></td>
+                                <td style="color: var(--accent-purple)">Closed-Loop AI Synthesis</td>
+                                <td>Active learning engine using Bayesian Optimization for self-directed polymer formulation discovery.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card full-width">
+                    <h3>Full Integrated Closed-Loop Topography</h3>
+                    <pre>
+USER → Recipe Generator → Bayesian Optimizer → Experiment Planner → CNC Controller
+                                                                            │
+      ┌─────────────────────────────────────────────────────────────────────┘
+      ▼
+┌──────────────┐      ┌──────────────┐      ┌────────────────┐      ┌──────────────┐
+│Syringe Pumps │ ───> │ Static Mixer │ ───> │ Dispense Head  │ ───> │ Sample Plate │
+└──────────────┘      └──────────────┘      └────────────────┘      └──────┬───────┘
+                                                                           │
+┌──────────────┐      ┌──────────────┐      ┌────────────────┐             │
+│  SQLite DB   │ <─── │OpenCV Engine │ <─── │ Top CCD Camera │ <───────────┘
+      │               └──────────────┘      └────────────────┘
+      ▼
+Machine Learning Engine ───(Suggest Next Formulation Experiment Process)───> [Loop Repeat]</pre>
+                </div>
+            </div>
+        </div>
+
+        <div id="task1" class="tab-content">
+            <div class="header">
+                <h1>Milestone 1: Motion Platform & Hardware Integration</h1>
+                <p>Constructing physical coordinate mechanical foundations and liquid manipulation axes.</p>
+            </div>
+            <div class="grid">
+                <div class="card">
+                    <h3>Hardware Bill of Deliverables</h3>
+                    <ul>
+                        <li><strong>3018 CNC Core Unit:</strong> Fully calibrated structural framework.</li>
+                        <li><strong>Syringe Pump Array:</strong> High-torque stepper motor mounts installed.</li>
+                        <li><strong>Quad-Pump Configuration:</strong> 4 operational units configured via serial interfaces.</li>
+                        <li><strong>Dispensation Cluster:</strong> Single unified toolhead housing all lines cleanly.</li>
+                        <li><strong>Substrate Fixture:</strong> Rigified plate locator ensuring accurate well positions.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Mechanical Kinematic Routing</h3>
+                    <pre>
+3018 CNC Frame
+  ├── X/Y Gantry (Stage Bed)
+  └── Z Axis Toolhead Carrier
+        ├── Syringe Pump A ──┐
+        ├── Syringe Pump B ──┼──> [Unified Dispense Block]
+        ├── Syringe Pump C ──┤          └──> Dispense Needle
+        └── Syringe Pump D ──┘</pre>
+                </div>
+                <div class="card full-width">
+                    <h3>Rigorous Verification Bounds</h3>
+                    <div>
+                        <span class="target-badge">X/Y Repeatability < 0.20 mm</span>
+                        <span class="target-badge">Z Target Compliance < 0.10 mm</span>
+                        <span class="target-badge">Dispensation CV < 5.0%</span>
+                    </div>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 12px;">
+                        Validation methodology requires driving translation lines to multiple limit-cycle coordinates, measuring positioning error using digital dial indicators, and logging analytical gravimetric displacement weights.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div id="task2" class="tab-content">
+            <div class="header">
+                <h1>Milestone 2: Fluid Delivery & Mixing Performance</h1>
+                <p>Engineering chemical dispersion pathways to eliminate volumetric error and guarantee homogeneity.</p>
+            </div>
+            <div class="grid">
+                <div class="card">
+                    <h3>Fluid Architecture</h3>
+                    <pre>
+[ Reservoir A, B, C, D ]
+           │
+           ▼
+ [ 4x Mechanical Pumps ]
+           │
+           ▼
+   [ Static Mixer ]
+           │
+           ▼
+   [ Dispense Needle ]</pre>
+                </div>
+                <div class="card">
+                    <h3>Functional Target Tasks</h3>
+                    <ul>
+                        <li><strong>Dynamic Calibration Matrices:</strong> Gravimetric verification lines across multiple target scales.</li>
+                        <li><strong>Mixing Volume Targets:</strong> Stable profiles for 5, 10, 20, 50, and 100 µL batches.</li>
+                        <li><strong>Fluidic Optimization:</strong> Low dead-volume inline static blending components.</li>
+                    </ul>
+                </div>
+                <div class="card full-width">
+                    <h3>Incremental Phase Surrogate Demo</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 16px;">
+                        Before processing expensive functional polymers, the platform executes a 100-sample color array using aqueous dye surrogates. This tests continuous fluid delivery across complex composition shifts.
+                    </p>
+                    <div style="display: flex; gap: 12px;">
+                        <span class="target-badge" style="background:rgba(239,68,68,0.15); color:#ef4444;">Stock Red Dye (A)</span>
+                        <span class="target-badge" style="background:rgba(59,130,246,0.15); color:#3b82f6;">Stock Blue Dye (B)</span>
+                        <span class="target-badge" style="background:rgba(234,179,8,0.15); color:#eab308;">Stock Yellow Dye (C)</span>
+                        <span class="target-badge" style="background:rgba(255,255,255,0.08); color:#fff;">Pure Solvent H2O (D)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="task3" class="tab-content">
+            <div class="header">
+                <h1>Milestone 3: Software Framework & Unified Control Stack</h1>
+                <p>Developing low-latency orchestration drivers to handle fully unsupervised experimental workflows.</p>
+            </div>
+            <div class="grid">
+                <div class="card">
+                    <h3>Data Flow Architecture</h3>
+                    <pre>
+     [ User Definition / CSV File ]
+                   │
+                   ▼
+          [ Recipe Generator ]
+                   │
+                   ▼
+          [ G-code Transpiler ]
+                   │
+                   ▼
+     [ Low-level GRBL CNC Firmware ]
+        ├── Stepper Motor Actuation
+        └── Fluid Injection Command</pre>
+                </div>
+                <div class="card">
+                    <h3>Modular Python File Manifest</h3>
+                    <pre style="color: var(--accent-blue)">
+main.py       - Master Control Orchestrator
+motion.py     - GRBL Serial Connection Link
+pump.py       - Fluid Dispensation Hardware Drivers
+camera.py     - Image Capture Interfaces
+recipe.py     - Matrix Input Target Evaluators
+database.py   - Local SQL Storage Managers
+vision.py     - Analytical Image Processors</pre>
+                </div>
+                <div class="card full-width">
+                    <h3>Unsupervised Autonomy Verification</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 12px;">
+                        The target requirement to pass Milestone 3 is the unassisted processing of a **96-well plate grid format** parse sequence defined via an incoming matrix table layout:
+                    </p>
+                    <pre style="color: #fff; font-size: 0.8rem;">
+# Input Array Template (compositions.csv)
+A,   B,   C,   D
+100, 0,   0,   0   -> Well A1: Move to coordinate -> Inject -> Image Snapshot -> Commit SQL Meta
+90,  10,  0,   0   -> Well A2: Move to coordinate -> Inject -> Image Snapshot -> Commit SQL Meta
+80,  20,  0,   0   -> Well A3: Move to coordinate -> Inject -> Image Snapshot -> Commit SQL Meta</pre>
+                </div>
+            </div>
+        </div>
+
+        <div id="task4" class="tab-content">
+            <div class="header">
+                <h1>Milestone 4: Optical Processing & Quantitative Pipelines</h1>
+                <p>Extracting high-fidelity, actionable data arrays from raw images using computer vision.</p>
+            </div>
+            <div class="grid">
+                <div class="card">
+                    <h3>Computer Vision Pipeline</h3>
+                    <pre>
+          Raw Image Capture
+                  │
+                  ▼
+         [ Well Localization ]
+                  │
+                  ▼
+         [ Spot Segmentation ]
+                  │
+                  ▼
+     [ Quantitative Feature Extraction ]
+        ├── RGB Color Mapping
+        ├── Form Factor Surface Area
+        └── Local Turbidity Analysis
+                  │
+                  ▼
+     [ Structured Storage Database ]</pre>
+                </div>
+                <div class="card">
+                    <h3>Diagnostic Environment Specs</h3>
+                    <ul>
+                        <li><strong>Sensor Setup:</strong> High-resolution overhead digital camera.</li>
+                        <li><strong>Controlled Lighting:</strong> Diffuse 5500K LED Ring Array to eliminate glares.</li>
+                        <li><strong>Fixed Parameters:</strong> Exposure lock, manual white balance, fixed ISO.</li>
+                        <li><strong>Database Storage:</strong> SQLite table storing compositions, images, and analytics.</li>
+                    </ul>
+                </div>
+                <div class="card full-width">
+                    <h3>Autonomous Target Stabilization Objective</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 0;">
+                        <strong>Optimization Closed-Loop Task:</strong> Program the robot to autonomously reach a specific target color coordinate (e.g., Purple). The pipeline processes the spot, computes the RGB distance metric, and automatically shifts upcoming formulation recipes to minimize color error.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div id="task5" class="tab-content">
+            <div class="header">
+                <h1>Milestone 5: Closed-Loop Machine Learning</h1>
+                <p>Deploying Bayesian Optimization loops to let the system direct its own active learning search paths.</p>
+            </div>
+            <div class="grid">
+                <div class="card">
+                    <h3>Active Learning Loop</h3>
+                    <pre>
+┌─── [ Formulate Experiment Substrate ]
+│                    │
+│                    ▼
+│        [ Quantitative Profiling ]
+│                    │
+│                    ▼
+│         [ Computer Vision Extract ]
+│                    │
+│                    ▼
+│       [ Bayesian Parameter Engine ]
+│                    │
+│                    ▼
+└─── [ Suggest Optimal Formulation ]</pre>
+                </div>
+                <div class="card">
+                    <h3>Core Optimization Stack</h3>
+                    <pre style="color: var(--accent-purple)">
+- NumPy & Pandas   (Data Restructuring)
+- OpenCV           (Spectral Extraction)
+- Scikit-Learn     (Baseline Evaluations)
+- GPyTorch         (Gaussian Process Models)
+- BoTorch          (Bayesian Optimization)</pre>
+                </div>
+                <div class="card full-width">
+                    <h3>Complex Multi-Objective Design Spaces</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 16px;">
+                        The platform optimizes conflicting parameter fronts to find Pareto-optimal polymer profiles without human intervention:
+                    </p>
+                    <div style="display: flex; flex-direction: column; gap: 8px; font-family: monospace; background: rgba(0,0,0,0.2); padding: 12px; border-radius: 4px;">
+                        <span style="color: var(--accent-blue)">⚡ Maximize( Optical Translucency Transparency )</span>
+                        <span style="color: var(--accent-green)">⚡ Maximize( Fluid Dynamic Viscosity Profiles )</span>
+                        <span style="color: #ef4444;">⚡ Minimize( Expensive Chemical Additive Loading )</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function switchTab(event, tabId) {
+            // Remove active classes from all buttons
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            // Hide all tab content boxes
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            // Activate current targets
+            event.currentTarget.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+    </script>
+</body>
+</html>
